@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core'; 
 
 @Component({
   selector: 'app-secure',
@@ -6,10 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./secure.component.css']
 })
 export class SecureComponent implements OnInit {
-
-  constructor() { }
+  
+  constructor() {
+      
+   }
 
   ngOnInit() {
   }
-
+ 
 }

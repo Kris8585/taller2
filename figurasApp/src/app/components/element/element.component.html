@@ -1,2 +1,8 @@
-element
-<router-outlet></router-outlet>
+<div class="row h-100">
+    <div class="col">
+        element
+    </div>
+    <div class="col bg-danger" *ngIf="isElementRoute">
+        <router-outlet></router-outlet>
+    </div>
+</div>
