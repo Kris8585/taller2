@@ -1,8 +1,7 @@
 <div class="row h-100">
     <div class="col">
         element
+        <button class="btn btn-outline-dark" (click)="goTo('/secure/principal')">Principal</button>
     </div>
-    <div class="col bg-danger" *ngIf="isElementRoute">
-        <router-outlet></router-outlet>
-    </div>
+
 </div>

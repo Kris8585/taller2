@@ -2,6 +2,10 @@
     <div class="row h-100">
         <div class="col-4 bg-primary">
             secure
+
+            <button class="btn btn-outline-dark" (click)="goTo('/secure/element/triangle')">Triangle</button>
+            <button class="btn btn-outline-dark" (click)="goTo('/secure/element/square')">Square</button>
+            <button class="btn btn-outline-dark" (click)="goTo('/about-us')">About Us</button>
         </div>
         <div class="col-8  bg-secondary">
             <router-outlet></router-outlet>

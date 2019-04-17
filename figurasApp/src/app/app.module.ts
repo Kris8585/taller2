@@ -8,9 +8,6 @@ import { AboutUsComponent } from './components/about-us/about-us.component';
 import { SecureComponent } from './components/secure/secure.component';
 import { PrincipalComponent } from './components/principal/principal.component';
 import { ElementComponent } from './components/element/element.component';
-import { ElementImagesComponent } from './components/element-images/element-images.component';
-import { ElementFormulasComponent } from './components/element-formulas/element-formulas.component';
-import { ElementRestrictedComponent } from './components/element-restricted/element-restricted.component';
 import { LoginService } from './services/login/login.service';
 import { DataService } from './services/data/data.service';
 import { AuthenticationGuard } from './guards/authentication/authentication.guard';
@@ -26,10 +23,7 @@ import { RecoveryComponent } from './components/recovery/recovery.component';
     AboutUsComponent, 
     SecureComponent,
     PrincipalComponent,
-    ElementComponent,
-    ElementImagesComponent,
-    ElementFormulasComponent,
-    ElementRestrictedComponent,
+    ElementComponent, 
     AccountComponent,
     LoginComponent,
     RegisterComponent,

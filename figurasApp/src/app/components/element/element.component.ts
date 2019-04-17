@@ -8,17 +8,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class ElementComponent implements OnInit {
   isElementRoute: boolean;
-
-
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
-    this.checkIfIsElementRoute();
-  }
-  checkIfIsElementRoute() {
-    this.activatedRoute.paramMap.subscribe(params => {
-      this.isElementRoute = !this.router.isActive(`secure/element/${params.get("elementName")}`, true);
-    });
-  }
+  constructor(private router: Router ) {
+  
+  } 
   ngOnInit() {
   }
-
+  goTo(route:string){
+    this.router.navigateByUrl(route);
+  }
 }
