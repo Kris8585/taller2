@@ -1,7 +1,31 @@
 <div class="row h-100">
-    <div class="col">
-        element
-        <button class="btn btn-outline-dark" (click)="goTo('/secure/principal')">Principal</button>
+    <div class="col m-4 border-dashed">
+        <div id="elementoSection" *ngIf="elemento">
+            <h2 class="text-capitalize text-center mt-3">{{elemento.nombre}}</h2>
+            <p class="text-justify mt-3">{{elemento.descripcion}}
+                <a href="{{elemento.referencia.link}}" *ngIf="elemento.referencia">{{elemento.referencia.titulo}}</a></p>
+        </div>
+        <div class="row  justify-content-center mt-5">
+            <button class="btn btn-primary" (click)="showSection('formulas')">Fórmulas</button>
+        </div>
+        <div class="row  justify-content-center mt-3">
+            <button class="btn btn-primary " (click)="showSection( 'imagenes') ">Imagenes</button>
+        </div>
+    </div>
+    <div class="col m-4 border-dashed" *ngIf="sectionShowed=='formulas'">
+
+        <h2 class="text-capitalize text-center mt-3">Formulas</h2>
+
+        <div *ngFor="let formula of elemento.formulas">
+            <h4 class="text-capitalize">{{formula.titulo}}</h4>
+            <p class="text-center ">{{formula.formula}}</p>
+        </div>
     </div>
 
+    <div class="col m-4 border-dashed" *ngIf="sectionShowed=='imagenes'">
+
+        <h2 class="text-capitalize text-center mt-3">Imagenes</h2>
+
+        <img [src]="imagenPath" class="img-fluid" alt="elemento.nombre" *ngFor="let imagenPath of elemento.imagenes">
+    </div>
 </div>

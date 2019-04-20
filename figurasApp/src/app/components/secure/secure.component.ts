@@ -9,9 +9,9 @@ import { Observable } from 'rxjs';
   styleUrls: ['./secure.component.css']
 })
 export class SecureComponent implements OnInit {
-  shapes$:Observable<any>;
+  elementos$:Observable<any>;
   constructor(private router:Router, private dataService:DataService) {
-   this.shapes$= dataService.getData('shapes');
+   this.elementos$= dataService.getAllElementos();
    }
 
   ngOnInit() {

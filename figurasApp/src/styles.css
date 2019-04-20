@@ -9,3 +9,27 @@ body {
 .flex-fill {
     flex: 1;
 }
+
+.height-75 {
+    height: 75%;
+}
+
+.mt-15 {
+    margin-top: 15%;
+}
+
+.height-99 {
+    height: 99.5%!important;
+}
+
+.border-dashed {
+    border-style: dashed;
+}
+
+.fa-10x {
+    font-size: 10em !important;
+}
+
+.h-90 {
+    height: 90% !important;
+}

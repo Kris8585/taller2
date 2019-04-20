@@ -12,6 +12,7 @@ export class AboutUsComponent implements OnInit {
 
   ngOnInit() {
   } 
+  
   goTo(route:string){
     this.router.navigateByUrl(route);
   }

@@ -1,13 +1,13 @@
-<div class="container-fluid d-flex h-100 flex-column">
-    <div class="row h-100">
+<div class="container-fluid d-flex height-99 flex-column">
+    <div class="row height-99">
         <div class="col-4 bg-primary">
 
-            <h4 class="text-white mt-3 text-center">Welcome to Application</h4>
+            <h4 class="text-white mt-3 text-center" [routerLink]="['/secure','principal']">Welcome to Application</h4>
 
-            <nav class="nav flex-column pt-3" style="height: 80%;" *ngIf="shapes$">
-                <a class="nav-link text-white" [routerLink]="['/secure','element',item.nombre]" routerLinkActive="text-bold" *ngFor="let item of (shapes$| async)">{{item.nombre}}</a>
+            <nav class="nav flex-column pt-3 height-75" *ngIf="elementos$">
+                <a class="nav-link text-white" [routerLink]="['/secure','element',item.nombre]" routerLinkActive="text-bold" *ngFor="let item of (elementos$| async)">{{item.nombre}}</a>
             </nav>
-            <nav class="nav flex-column" style="height: 80%;" *ngIf="!shapes$">
+            <nav class="nav flex-column height-75" *ngIf="!elementos$">
                 <span class="nav-link text-white"> <i class="fa fa-info-circle" aria-hidden="true"> </i> No hay items</span>
             </nav>
 
@@ -17,7 +17,7 @@
                 <a class="nav-link text-white text-center" [routerLink]="['/about-us']">About us</a>
             </nav>
         </div>
-        <div class="col-8  bg-secondary">
+        <div class="col-8 ">
             <router-outlet></router-outlet>
         </div>
     </div>

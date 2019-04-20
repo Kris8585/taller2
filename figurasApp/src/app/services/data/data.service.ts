@@ -6,11 +6,38 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class DataService {
+  
 
-  constructor(private angularFirestore:AngularFirestore) { 
+  constructor(private angularFirestore: AngularFirestore) {
   }
-  getData(collectionName:string) : Observable<any[]> {
-    return this.angularFirestore.collection(collectionName).valueChanges();
+  getAllElementos(): Observable<Elemento[]> {
+    return this.angularFirestore.collection<Elemento>('shapes').valueChanges();
+  }
+  getFormulasToElemento() {
+    return this.angularFirestore.doc<Elemento>('shapes')
+      .collection<Formula>('formulas').valueChanges();
+  }
+  getElementosByName(term: string): Observable<Elemento[]> { 
+      return  this.angularFirestore.collection<Elemento>('shapes', ref => ref.where('nombre', '==', term)).valueChanges();
+  }
+  deleteElemento(elemento: Elemento) { 
+    this.angularFirestore.collection<Elemento>('shapes').doc(elemento.id).delete();
+  }
+
+
+  saveElemento(elemento: Elemento) {
+    if (elemento.id) {
+      this.angularFirestore.collection<Elemento>('shapes').add(elemento)
+
+    } else {
+      elemento.id = this.angularFirestore.createId();
+      
+      this.angularFirestore.collection<Elemento>('shapes').doc(elemento.id).set(elemento);
+    } 
+
+
   }
 
 }
+
+
