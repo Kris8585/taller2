@@ -23,11 +23,15 @@ body {
 }
 
 .mt-15 {
-    margin-top: 15%;
+    margin-top: 10%;
 }
 
 .height-99 {
     height: 99.5%!important;
+}
+
+.border-solid {
+    border-style: solid;
 }
 
 .border-dashed {

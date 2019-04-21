@@ -2,7 +2,18 @@
 
     <div class="mt-15">
         <div class="d-flex justify-content-center">
-            recovery area
+            <form class="text-left  border-solid p-3" [formGroup]="formGroup" id="formGroup">
+                <h4>No problem, recovery your account</h4>
+                <div class="form-group">
+                    <label for="emailInput">User email</label>
+                    <input type="email" formControlName="email" class="form-control" id="emailInput" aria-describedby="emailHelp" placeholder="Enter email">
+                </div>
+
+                <div class="text-left mt-3 mb-3">
+                    <a class="" [routerLink]="['/account','login']">Return to login</a>
+                </div>
+                <button type="submit" class="btn btn-primary float-right">Recovery</button>
+            </form>
         </div>
 
     </div>
