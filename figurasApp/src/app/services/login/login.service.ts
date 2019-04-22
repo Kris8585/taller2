@@ -19,12 +19,16 @@ constructor(private angularFireAuth: AngularFireAuth, private router:Router,
      this.titulo$ = new Subject<string>();
      this.currentUser$ = new Subject<Usuario>();
   }
-
+  recovery(email: string) { 
+      this.angularFireAuth.auth.sendPasswordResetEmail(email)
+      .then(() =>  this.snotifyService.success('Se ha enviado un correo para restaurar su cuenta','Excelente'))
+      .catch((error) => this.snotifyService.warning('Se ha presentado el siguiente error: '+error,'Atención'))
+  }
 register(user:Usuario, password:string) { 
   this.angularFireAuth.auth.createUserWithEmailAndPassword(user.email,password).then((result)=>{
     user.userId= result.user.uid;
     this.dataService.saveUsuario(user);
-    this.snotifyService.success('El usuario fue registrado correctamente','Excelente');
+    this.snotifyService.success('El usuario fue registrado correctamente, Bienvenido!','Excelente');
     this.login(user.email,password);
   }).catch((error)=>{
     this.snotifyService.warning('No se ha podido registrar el usuario por:' + error, 'Registro de usuarios'); 
