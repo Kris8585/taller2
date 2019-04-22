@@ -9,6 +9,7 @@ import { SnotifyService } from 'ng-snotify';
   providedIn: 'root'
 })
 export class LoginService {
+  
   titulo$:Subject<string>;
   currentUser$:Subject<Usuario>; 
   userSuscription: Subscription;
@@ -17,6 +18,19 @@ constructor(private angularFireAuth: AngularFireAuth, private router:Router,
   private dataService:DataService, private snotifyService: SnotifyService) { 
      this.titulo$ = new Subject<string>();
      this.currentUser$ = new Subject<Usuario>();
+  }
+
+register(user:Usuario, password:string) { 
+  this.angularFireAuth.auth.createUserWithEmailAndPassword(user.email,password).then((result)=>{
+    user.userId= result.user.uid;
+    this.dataService.saveUsuario(user);
+    this.snotifyService.success('El usuario fue registrado correctamente','Excelente');
+    this.login(user.email,password);
+  }).catch((error)=>{
+    this.snotifyService.warning('No se ha podido registrar el usuario por:' + error, 'Registro de usuarios'); 
+   
+  });
+    
   }
 
   getTitulo(): Observable<string> {

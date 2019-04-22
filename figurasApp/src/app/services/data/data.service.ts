@@ -6,6 +6,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class DataService {
+  saveUsuario(user: Usuario) { 
+    this.angularFirestore.collection<Usuario>('users').add(user)
+     
+  }
   getUsuarioByEmail(email: string): Observable<Usuario[]> {
     return  this.angularFirestore.collection<Usuario>('users', ref => ref.where('email', '==', email)).valueChanges();
  
@@ -37,9 +41,7 @@ export class DataService {
       elemento.id = this.angularFirestore.createId();
       
       this.angularFirestore.collection<Elemento>('shapes').doc(elemento.id).set(elemento);
-    } 
-
-
+    }  
   }
 
 }
