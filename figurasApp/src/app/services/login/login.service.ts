@@ -1,22 +1,55 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
+import { AngularFireAuth } from '@angular/fire/auth'; 
+import { Router } from '@angular/router'; 
+import { DataService } from '../data/data.service';
+import { SnotifyService } from 'ng-snotify';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
   titulo$:Subject<string>;
+  currentUser$:Subject<Usuario>; 
+  userSuscription: Subscription;
 
-constructor() { 
+constructor(private angularFireAuth: AngularFireAuth, private router:Router,
+  private dataService:DataService, private snotifyService: SnotifyService) { 
      this.titulo$ = new Subject<string>();
+     this.currentUser$ = new Subject<Usuario>();
   }
 
   getTitulo(): Observable<string> {
     return this.titulo$; 
    
   }
+
   setTitulo(titulo:string) {  
    this.titulo$.next(titulo); 
   }
   
+  getUser(): Observable<Usuario> {
+    return this.currentUser$; 
+   
+  }
+
+  logout(){
+    this.angularFireAuth.auth.signOut();
+    this.router.navigateByUrl('/account/login');
+  }
+
+  login(email:string,password:string){
+    this.angularFireAuth.auth.signInWithEmailAndPassword(email,password).then(()=> {
+      this.setCurrentUser(email);
+      this.router.navigateByUrl('/secure/principal');
+      }).catch((error)=>{ 
+        this.snotifyService.warning('No se ha podido iniciar sesión', 'Atención'); 
+      });
+  }
+//TODO: Revisar como mantener el usuario cuando se sale del componente Secure.
+  setCurrentUser(email:string){ 
+    this.userSuscription = this.dataService.getUsuarioByEmail(email).subscribe((usuarios) => { 
+      this.currentUser$.next(usuarios[0]);
+    });
+  }
 }

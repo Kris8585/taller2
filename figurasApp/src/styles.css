@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import "~bootstrap/dist/css/bootstrap.min.css";
+@import "~ng-snotify/styles/material";
 html,
 body {
     height: 100%;
@@ -18,8 +19,8 @@ body {
     flex: 1;
 }
 
-.height-75 {
-    height: 75%;
+.height-65 {
+    height: 65%;
 }
 
 .mt-15 {

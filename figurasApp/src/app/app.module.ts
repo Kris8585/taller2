@@ -22,6 +22,8 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 
+import { SnotifyModule, SnotifyService, ToastDefaults } from 'ng-snotify';
+
 import { environment } from '../environments/environment';
 
 @NgModule({
@@ -45,9 +47,13 @@ import { environment } from '../environments/environment';
     AngularFireStorageModule,
     AngularFireAuthModule,
     ReactiveFormsModule ,
-    FormsModule 
+    FormsModule ,
+    SnotifyModule.forRoot()
   ],
-  providers: [DataService, LoginService, AuthenticationGuard, AuthorizationGuard],
+  providers: [DataService, LoginService, AuthenticationGuard, AuthorizationGuard,
+    { provide: 'SnotifyToastConfig', useValue: ToastDefaults},
+    SnotifyService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

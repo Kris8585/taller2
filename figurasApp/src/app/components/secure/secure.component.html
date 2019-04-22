@@ -4,10 +4,11 @@
 
             <h4 class="text-white mt-3 text-center" [routerLink]="['/secure','principal']">Welcome to Application</h4>
 
-            <nav class="nav flex-column pt-3 height-75" *ngIf="elementos$">
+            <h2 class="text-white mt-2 text-center">{{usuario?.nombre}}</h2>
+            <nav class="nav flex-column pt-3 height-65" *ngIf="elementos$">
                 <a class="nav-link text-white" [routerLink]="['/secure','element',item.nombre]" routerLinkActive="text-bold" *ngFor="let item of (elementos$| async)">{{item.nombre}}</a>
             </nav>
-            <nav class="nav flex-column height-75" *ngIf="!elementos$">
+            <nav class="nav flex-column height-65" *ngIf="!elementos$">
                 <span class="nav-link text-white"> <i class="fa fa-info-circle" aria-hidden="true"> </i> No hay items</span>
             </nav>
 

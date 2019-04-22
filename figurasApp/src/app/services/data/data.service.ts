@@ -6,6 +6,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class DataService {
+  getUsuarioByEmail(email: string): Observable<Usuario[]> {
+    return  this.angularFirestore.collection<Usuario>('users', ref => ref.where('email', '==', email)).valueChanges();
+ 
+  }
   
 
   constructor(private angularFirestore: AngularFirestore) {

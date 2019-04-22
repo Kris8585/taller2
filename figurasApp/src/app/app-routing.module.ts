@@ -8,6 +8,7 @@ import { AccountComponent } from './components/account/account.component';
 import { LoginComponent } from './components/login/login.component';
 import { RecoveryComponent } from './components/recovery/recovery.component';
 import { RegisterComponent } from './components/register/register.component';
+import { AuthenticationGuard } from './guards/authentication/authentication.guard';
 
 const routes: Routes = [
 
@@ -17,7 +18,7 @@ const routes: Routes = [
       { path: 'recovery', component: RecoveryComponent },
       { path: 'register', component: RegisterComponent },
     ]  },
-  { path: 'secure', component: SecureComponent, children: [
+  { path: 'secure', component: SecureComponent,canActivate:[AuthenticationGuard], children: [
       { path: 'principal', component: PrincipalComponent },
       {
         path: 'element/:elementName', component: ElementComponent  },
