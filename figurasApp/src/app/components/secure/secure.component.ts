@@ -13,22 +13,21 @@ export class SecureComponent implements OnInit {
   elementos$: Observable<any>;
   userSuscription: Subscription;
   usuario: Usuario;
+   
   constructor(private router: Router, private dataService: DataService, private loginService: LoginService) {
-    this.elementos$ = dataService.getAllElementos();
-
-    this.userSuscription = this.loginService.getUser().subscribe((usuario) => {
-      this.usuario = usuario;
-    });
+    this.elementos$ = dataService.getAllElementos(); 
   }
 
-  ngOnDestroy(): void {
-    this.userSuscription.unsubscribe();
-  }
   ngOnInit() {
+    setTimeout(() => {
+      this.usuario = this.loginService.getUsuario();
+    }, 1000);
   }
+
   logout() {
     this.loginService.logout();
   }
+
   goTo(route: string) {
     this.router.navigateByUrl(route);
 

@@ -14,7 +14,7 @@ export class ElementComponent implements OnInit {
   elemento: Elemento;
   paramSuscription: Subscription;
   elementoSuscription: Subscription;
-  sectionShowed:string;
+  sectionShowed: string;
 
   constructor(private router: Router, private dataService: DataService, private activatedRoute: ActivatedRoute) {
     this.loadElementoByParameter();
@@ -27,22 +27,24 @@ export class ElementComponent implements OnInit {
     this.paramSuscription.unsubscribe();
     this.elementoSuscription.unsubscribe();
   }
-  showSection(sectionName:string){
-    console.log(sectionName);
-    
-    this.sectionShowed=sectionName;
+
+  showSection(sectionName: string) {
+    this.sectionShowed = sectionName;
   }
-  resetSectionShowed(){
+
+  resetSectionShowed() {
     this.showSection('');
   }
+
   goTo(route: string) {
     this.router.navigateByUrl(route);
   }
+
   loadElementoByParameter() {
     this.paramSuscription = this.activatedRoute.paramMap.subscribe((params) => {
       this.resetSectionShowed();
       this.elementName = params.get('elementName');
-      this.elementoSuscription =   this.dataService.getElementosByName(this.elementName).subscribe((elementos) => {
+      this.elementoSuscription = this.dataService.getElementosByName(this.elementName).subscribe((elementos) => {
         this.elemento = elementos[0];
       });
     }
