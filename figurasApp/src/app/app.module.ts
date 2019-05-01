@@ -25,6 +25,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { SnotifyModule, SnotifyService, ToastDefaults } from 'ng-snotify';
 
 import { environment } from '../environments/environment';
+import { ElementAdminComponent } from './components/element-admin/element-admin.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { environment } from '../environments/environment';
     AccountComponent,
     LoginComponent,
     RegisterComponent,
-    RecoveryComponent
+    RecoveryComponent,
+    ElementAdminComponent
   ],
   imports: [
     BrowserModule,

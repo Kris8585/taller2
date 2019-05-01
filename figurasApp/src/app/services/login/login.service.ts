@@ -39,6 +39,10 @@ export class LoginService {
 
   }
 
+  userHasRole(role:string){ 
+      return this.currentUser && this.currentUser.roles.includes(role);
+    
+  }
   logout() {
     this.currentUser = null;
     this.angularFireAuth.auth.signOut();
