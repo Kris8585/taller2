@@ -1,3 +1,89 @@
-<p>
-  element-admin works!
-</p>
+<h2>Información de noticias</h2>
+
+<form [formGroup]="formGroup" id="formGroup" class="row">
+
+    <div class="form-group col-12">
+        <label for="nombre">Nombre</label>
+        <input type="text" class="form-control" formControlName="nombre" id="nombre" placeholder="Escriba el nombre">
+        <div *ngIf="formGroup.controls['nombre'].dirty">
+            <div class="form-control-feedback text-danger" *ngIf="formGroup.controls['nombre'].errors?.required">
+                El nombre es requerido
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group col-12" formArrayName="imagenes">
+        <label for="titulo">Imagenes</label>
+        <input type="text" (keydown)="verificarYBorrar($event,i)" [formControlName]="i" *ngFor="let imagen of formGroup.controls['imagenes'].controls; let i = index" class="form-control mb-2" id="imagen" placeholder="Escriba la url de la imagen">
+        <div *ngIf="formGroup.controls['imagenes'].dirty">
+            <div class="form-control-feedback text-danger" *ngIf="formGroup.controls['imagenes'].errors?.required">
+                Debe completar la url de cada imagen
+            </div>
+        </div>
+        <button class="btn btn-light" type="button" (click)="agregarImagen()"> Agregar</button>
+    </div>
+
+    <div class="form-group col-12">
+        <label for="titulo">Descripción</label>
+        <input type="text" class="form-control" formControlName="descripcion" id="descripcion" placeholder="Escriba la descripción">
+        <div *ngIf="formGroup.controls['descripcion'].dirty">
+            <div class="form-control-feedback text-danger" *ngIf="formGroup.controls['descripcion'].errors?.required">
+                La descripción es requerida
+            </div>
+            <div class="form-control-feedback text-danger" *ngIf="formGroup.controls['descripcion'].errors?.minlength">
+                La descripción debe ser de almenos 15 caracteres
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group col-12" formGroupName="referencia">
+
+        <label for="link">Vínculo de referencia</label>
+        <input type="text" class="form-control" formControlName="link" id="link" placeholder="Escriba el vínculo">
+        <div *ngIf="formGroup.controls['referencia'].controls['link'].dirty">
+            <div class="form-control-feedback text-danger" *ngIf="formGroup.controls['referencia'].controls['link'].errors?.required">
+                El vínculo de la referencia es requerido
+            </div>
+        </div>
+    </div>
+    <div class="form-group col-12" formGroupName="referencia">
+        <label for="titulo">Título de referencia</label>
+        <input type="text" class="form-control" formControlName="titulo" id="titulo" placeholder="Escriba el titulo">
+        <div *ngIf="formGroup.controls['referencia'].controls['titulo'].dirty">
+            <div class="form-control-feedback text-danger" *ngIf="formGroup.controls['referencia'].controls['titulo'].errors?.required">
+                El título de la referencia es requerido
+            </div>
+        </div>
+    </div>
+
+
+    <div formArrayName="formulas">
+        <label for="titulo">Formulas</label>
+        <div class="form-group col-12" [formControlName]="i" *ngFor="let formula of formGroup.controls['formulas'].controls; let i = index">
+            <input type="text" class="form-control" formControlName="formula" id="formula" placeholder="Escriba la formula">
+            <!-- <div *ngIf="formGroup.controls['formulas'].controls['formula'].dirty">
+                <div class="form-control-feedback text-danger" *ngIf="formGroup.controls['referencia'].controls['titulo'].errors?.required">
+                    El especificación de la formula es requerida
+                </div>
+            </div> -->
+
+            <!-- <input type="text" class="form-control" formControlName="titulo" id="titulo" placeholder="Escriba el titulo">
+            <div *ngIf="formGroup.controls['formulas'].controls['titulo'].dirty">
+                <div class="form-control-feedback text-danger" *ngIf="formGroup.controls['referencia'].controls['titulo'].errors?.required">
+                    El título de la referencia es requerido
+                </div>
+            </div> -->
+
+
+        </div>
+        <button class="btn btn-light" type="button" (click)="agregarImagen()"> Agregar</button>
+
+    </div>
+
+
+
+
+</form>
+
+<button type="submit" class="btn btn-secondary float-right m-b-5" [ngClass]="{'disabled':!formGroup.valid}" (click)="guardarNuevo()">Guardar Nuevo</button>
+<button type="submit" class="btn btn-primary float-right m-b-5" [ngClass]="{'disabled':!formGroup.valid}" (click)="actualizar()">Actualizar</button>

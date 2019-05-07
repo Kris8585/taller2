@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/services/data/data.service';
 import { Observable, Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
+import { LoginService } from 'src/app/services/login/login.service';
 
 @Component({
   selector: 'app-element',
@@ -15,9 +16,11 @@ export class ElementComponent implements OnInit {
   paramSuscription: Subscription;
   elementoSuscription: Subscription;
   sectionShowed: string;
+  isMath:boolean;
 
-  constructor(private router: Router, private dataService: DataService, private activatedRoute: ActivatedRoute) {
+  constructor(private router: Router, private loginService: LoginService, private dataService: DataService, private activatedRoute: ActivatedRoute) {
     this.loadElementoByParameter();
+    this.isMath=this.loginService.userHasRole('Math');
   }
 
   ngOnInit() {

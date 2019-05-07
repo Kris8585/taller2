@@ -11,6 +11,10 @@
         <div class="row  justify-content-center mt-3">
             <button class="btn btn-primary " (click)="showSection( 'imagenes') ">Imagenes</button>
         </div>
+
+        <div class="row  justify-content-center mt-3" *ngIf="isMath">
+            <button class="btn btn-primary " [routerLink]="['/secure','element',elemento?.nombre,'edit']"> <i class="fa fa-edit"></i> Editar</button>
+        </div>
     </div>
     <div class="col m-4 border-dashed" *ngIf="sectionShowed=='formulas'">
 
