@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@ang
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from 'src/app/services/data/data.service';
 import { Subscription } from 'rxjs';
+import { SnotifyService } from 'ng-snotify';
 
 @Component({
   selector: 'app-element-admin',
@@ -17,7 +18,7 @@ export class ElementAdminComponent implements OnInit {
   elementoSuscription: Subscription;
 
   constructor(private formBuilder: FormBuilder, private dataService: DataService,
-    private route: ActivatedRoute, private router: Router) {
+    private route: ActivatedRoute, private router: Router, private snotifyService:SnotifyService) {
     this.elementoNombre = this.route.snapshot.params['elementName'];
     this.iniciarElemento();
     if (this.elementoNombre) {
@@ -98,12 +99,13 @@ export class ElementAdminComponent implements OnInit {
 
   guardar = (id: string) => {
     if (this.formGroup.valid) {
-      this.elementoNombre = this.formGroup.value.nombre.toLowerCase();
+      
+      this.actualizarNombreElementoMostrado();
+      
       const elemento = {
         id: id,
         nombre: this.elementoNombre,
         descripcion: this.formGroup.value.descripcion,
-
         imagenes: this.formGroup.value.imagenes,
         referencia: {
           link: this.formGroup.value.referencia.link,
@@ -111,18 +113,23 @@ export class ElementAdminComponent implements OnInit {
         },
         formulas: this.formGroup.value.formulas,
       }
+
       this.elementoId = this.dataService.saveElemento(elemento);
 
+      this.actualizarParametroEnRuta(); 
 
-      this.actualizarRuta();
-      alert("Información guardada");
-    } else {
-      alert("Debe completar la información correctamente");
+      this.snotifyService.success('Correo o contraseña incorrectos', 'Información'); 
+    } else { 
+      this.snotifyService.warning('Debe completar la información correctamente', 'Atención'); 
     }
   }
 
-  actualizarRuta = () => {
-    this.router.navigate(['secure', 'element', this.elementoNombre, 'edit']);
-
+  actualizarNombreElementoMostrado = () => {
+    this.elementoNombre = this.formGroup.value.nombre.toLowerCase();
   }
+
+  actualizarParametroEnRuta = () => {
+    this.router.navigate(['secure', 'element', this.elementoNombre, 'edit']);
+  }
+
 }
