@@ -127,7 +127,7 @@ export class ElementAdminComponent implements OnInit {
 
       this.actualizarParametroEnRuta();
 
-      this.snotifyService.success('Correo o contraseña incorrectos', 'Información');
+      this.snotifyService.success('Información guardada correctamente', 'Información');
     } else {
       this.snotifyService.warning('Debe completar la información correctamente', 'Atención');
     }
@@ -149,9 +149,12 @@ export class ElementAdminComponent implements OnInit {
   }
 
   uploadSingle() {
-    let file = this.selectedFiles.item(0)
+    let file = this.selectedFiles.item(0);
     this.currentUpload = new Upload(file);
-    this.uploadService.pushUpload(this.currentUpload)
+     
+     this.uploadService.pushUpload(this.currentUpload, this.elementoNombre);
+     
+    
   }
 
   
