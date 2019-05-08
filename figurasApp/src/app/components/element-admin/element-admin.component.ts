@@ -4,6 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from 'src/app/services/data/data.service';
 import { Subscription } from 'rxjs';
 import { SnotifyService } from 'ng-snotify';
+import * as _ from "lodash";
+import { Upload } from 'src/app/classes/upload.class';
+import { UploadService } from 'src/app/services/upload/upload.service';
 
 @Component({
   selector: 'app-element-admin',
@@ -17,8 +20,14 @@ export class ElementAdminComponent implements OnInit {
 
   elementoSuscription: Subscription;
 
+
+  selectedFiles: FileList;
+  currentUpload: Upload;
+
+
   constructor(private formBuilder: FormBuilder, private dataService: DataService,
-    private route: ActivatedRoute, private router: Router, private snotifyService:SnotifyService) {
+    private uploadService: UploadService,
+    private route: ActivatedRoute, private router: Router, private snotifyService: SnotifyService) {
     this.elementoNombre = this.route.snapshot.params['elementName'];
     this.iniciarElemento();
     if (this.elementoNombre) {
@@ -99,9 +108,9 @@ export class ElementAdminComponent implements OnInit {
 
   guardar = (id: string) => {
     if (this.formGroup.valid) {
-      
+
       this.actualizarNombreElementoMostrado();
-      
+
       const elemento = {
         id: id,
         nombre: this.elementoNombre,
@@ -116,11 +125,11 @@ export class ElementAdminComponent implements OnInit {
 
       this.elementoId = this.dataService.saveElemento(elemento);
 
-      this.actualizarParametroEnRuta(); 
+      this.actualizarParametroEnRuta();
 
-      this.snotifyService.success('Correo o contraseña incorrectos', 'Información'); 
-    } else { 
-      this.snotifyService.warning('Debe completar la información correctamente', 'Atención'); 
+      this.snotifyService.success('Correo o contraseña incorrectos', 'Información');
+    } else {
+      this.snotifyService.warning('Debe completar la información correctamente', 'Atención');
     }
   }
 
@@ -131,5 +140,20 @@ export class ElementAdminComponent implements OnInit {
   actualizarParametroEnRuta = () => {
     this.router.navigate(['secure', 'element', this.elementoNombre, 'edit']);
   }
+
+
+
+
+  detectFiles(event: any) {
+    this.selectedFiles = event.target.files;
+  }
+
+  uploadSingle() {
+    let file = this.selectedFiles.item(0)
+    this.currentUpload = new Upload(file);
+    this.uploadService.pushUpload(this.currentUpload)
+  }
+
+  
 
 }

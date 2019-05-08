@@ -1,5 +1,7 @@
 <h2>Información de noticias</h2>
 
+
+
 <form [formGroup]="formGroup" id="formGroup" class="row">
 
     <div class="form-group col-12">
@@ -21,6 +23,26 @@
             </div>
         </div>
         <button class="btn btn-outline-primary btn-sm" type="button" (click)="agregarImagen()"> Agregar</button>
+
+        <div *ngIf="currentUpload">
+            <div class="progress">
+                <div class="progress-bar progress-bar-animated" [ngStyle]="{ 'width': currentUpload?.progress + '%' }"></div>
+            </div>
+
+            {{currentUpload?.name}} Progreso: | {{currentUpload?.progress | number:'2.2-2'}}% avance
+        </div>
+
+        <div class="custom-file mb-3">
+            <input type="file" class="custom-file-input" id="customFile" (change)="detectFiles($event)">
+            <label class="custom-file-label" for="customFile">Seleccionar imagen</label>
+        </div>
+
+        <button class="btn btn-outline-primary mb-3" [disabled]="!selectedFiles" (click)="uploadSingle()">
+              Subir archivo
+            </button>
+
+
+
     </div>
 
     <div class="form-group col-12">
