@@ -3,15 +3,14 @@ import { Upload } from 'src/app/classes/upload.class';
 import * as firebase from 'firebase';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { SnotifyService } from 'ng-snotify';
-import { DataService } from '../data/data.service';
-import { query } from '@angular/core/src/render3';
+import { DataService } from '../data/data.service'; 
 
 @Injectable({
   providedIn: 'root'
 })
 export class UploadService {
   constructor(private angularFirestore: AngularFirestore, private snotifyService: SnotifyService
-    , private dataService: DataService) { }
+     ) { }
   private basePath: string = '/uploads';
 
   pushUpload(upload: Upload, elementoNombre: string) {
@@ -63,8 +62,7 @@ export class UploadService {
     });
   
   }
-
-
+ 
   deleteUpload(upload: Upload) {
     this.deleteFileFirestore(upload.$key)
       .then(() => {
