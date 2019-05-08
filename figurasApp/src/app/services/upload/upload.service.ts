@@ -4,6 +4,7 @@ import * as firebase from 'firebase';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { SnotifyService } from 'ng-snotify';
 import { DataService } from '../data/data.service';
+import { query } from '@angular/core/src/render3';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class UploadService {
     , private dataService: DataService) { }
   private basePath: string = '/uploads';
 
-  pushUpload(upload: Upload,  elementoNombre: string) {
+  pushUpload(upload: Upload, elementoNombre: string) {
 
     let storageRef = firebase.storage().ref();
     let uploadTask = storageRef.child(`${this.basePath}/${upload.file.name}`).put(upload.file);
@@ -38,23 +39,29 @@ export class UploadService {
     );
   }
 
-  private saveFileData(upload: Upload, elementoNombre:string) {
-       this.angularFirestore
-    .collection<Elemento>('shapes', ref => ref.where('nombre', '==', elementoNombre))
-    .snapshotChanges().subscribe((result:any) => {
-      const id=result[0].payload.doc.id;
-      if (id){ 
-        
-        this.dataService.getElementosByName(elementoNombre).subscribe((elementos:any) => {
-         elementos[0].imagenes.push(upload.url);
-        this.angularFirestore.collection<Elemento>('shapes').doc(id).set(elementos[0]); 
-        this.snotifyService.success('Se ha actualizado la información del elemento','Información');
-         });
-      } else{
-        this.snotifyService.warning('No se logro encontrar el elemento para asociar a esta imagen','Atención');
-      }
+  private saveFileData(upload: Upload, elementoNombre: string) {
+
+    this.angularFirestore.collection<Elemento>('shapes').ref.where('nombre', '==', elementoNombre).get()
+     .then(  (querySnapshot) => {
+       
+      querySnapshot.docs.forEach(doc => {
+        var elementRef = this.angularFirestore.collection('shapes').doc(doc.id);
+      
+        let nuevoArregloDeImagenes= doc.get('imagenes');
+        nuevoArregloDeImagenes.push(upload.url);
+       
+        return elementRef.update({ 
+         imagenes: nuevoArregloDeImagenes
+        }).then(()=>{
+          this.snotifyService.success('Se ha actualizado la información del elemento','Información');
+        }).catch((error)=>{
+          this.snotifyService.warning('Se ha presentado el siguiente inconveniente al guardar:'+ error,'Atención');
+      
+        });
+
+      });
     });
-    
+  
   }
 
 

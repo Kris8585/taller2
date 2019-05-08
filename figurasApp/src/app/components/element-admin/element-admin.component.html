@@ -16,33 +16,39 @@
 
     <div class="form-group col-12" formArrayName="imagenes">
         <label for="titulo">Imagenes</label>
-        <input type="text" (keydown)="borrarImagen($event,i)" [formControlName]="i" *ngFor="let imagen of formGroup.controls['imagenes'].controls; let i = index" class="form-control mb-2" id="imagen" placeholder="Escriba la url de la imagen">
+
+
+        <div class="input-group mb-3" *ngFor="let imagen of formGroup.controls['imagenes'].controls; let i = index">
+            <input readonly type="text" [formControlName]="i" class="form-control " id="imagen" placeholder="Escriba la url de la imagen">
+
+            <div class="input-group-append">
+                <button class="btn btn-outline-danger" (click)="borrarImagen($event,i)" type="button" id="button-addon2"><i
+            class="fa fa-times"></i></button>
+            </div>
+        </div>
+
         <div *ngIf="formGroup.controls['imagenes'].dirty">
             <div class="form-control-feedback text-danger" *ngIf="formGroup.controls['imagenes'].errors?.required">
                 Debe completar la url de cada imagen
             </div>
         </div>
-        <!-- <button class="btn btn-outline-primary btn-sm" type="button" (click)="agregarImagen()"> Agregar</button> -->
-    </div>
-    <div *ngIf="currentUpload">
-        <div class="progress">
-            <div class="progress-bar progress-bar-animated" [ngStyle]="{ 'width': currentUpload?.progress + '%' }"></div>
+
+        <div class="form-group col-12" *ngIf="currentUpload">
+            <div class="progress">
+                <div class="progress-bar progress-bar-animated" [ngStyle]="{ 'width': currentUpload?.progress + '%' }"></div>
+            </div>
+            {{currentUpload?.name}} Progreso: | {{currentUpload?.progress | number:'2.2-2'}}% avance
         </div>
-        {{currentUpload?.name}} Progreso: | {{currentUpload?.progress | number:'2.2-2'}}% avance
+
+        <div class="form-group col-12 custom-file mb-3">
+            <input type="file" class="custom-file-input" id="customFile" (change)="detectFiles($event)">
+            <label class="custom-file-label" for="customFile">Seleccionar imagen</label>
+        </div>
+
+        <button class="btn btn-outline-primary mb-3  btn-sm" [disabled]="!selectedFiles" (click)="uploadSingle()">
+      Agregar archivo
+    </button>
     </div>
-
-    <div class="custom-file mb-3">
-        <input type="file" class="custom-file-input" id="customFile" (change)="detectFiles($event)">
-        <label class="custom-file-label" for="customFile">Seleccionar imagen</label>
-    </div>
-
-    <button class="btn btn-outline-primary mb-3" [disabled]="!selectedFiles" (click)="uploadSingle()">
-              Agregar archivo
-            </button>
-
-
-
-
 
     <div class="form-group col-12">
         <label for="titulo">Descripción</label>
@@ -82,8 +88,10 @@
         <label>Fórmulas</label>
         <div formArrayName="formulas" *ngFor="let item of formGroup.get('formulas').controls; let i = index;">
             <div [formGroupName]="i">
-                <input class="form-control mb-2" id="formula" formControlName="formula" placeholder="Formula" (keydown)="borrarFormula($event,i)">
-                <input class="form-control mb-2" id="titulo" formControlName="titulo" placeholder="Título" (keydown)="borrarFormula($event,i)">
+                <button class="btn btn-outline-danger btn-sm pull-right" type="button" (click)="borrarFormula($event,i)"> Borrar
+          Fórmula</button>
+                <input class="form-control mb-2" id="titulo" formControlName="titulo" placeholder="Título">
+                <input class="form-control mb-2" id="formula" formControlName="formula" placeholder="Formula">
             </div>
         </div>
         <div *ngIf="formGroup.controls['formulas'].dirty">
@@ -95,6 +103,5 @@
     </div>
 
 </form>
-
 <button type="submit" class="btn btn-outline-primary float-right mr-2" [ngClass]="{'disabled':!formGroup.valid}" (click)="guardar(elementoId)">Actualizar</button>
 <button type="submit" class="btn btn-outline-secondary float-right mr-2" [ngClass]="{'disabled':!formGroup.valid}" (click)="guardar('')">Guardar Nuevo</button>

@@ -37,7 +37,7 @@ export class ElementAdminComponent implements OnInit {
 
   cargarElemento = (nombre: string) => {
     this.elementoSuscription = this.dataService.getElementosByName(nombre).subscribe((elementos) => {
-
+ 
       if (elementos[0]) {
         this.elementoId = elementos[0].id;
 
@@ -92,21 +92,17 @@ export class ElementAdminComponent implements OnInit {
       })
     });
   }
-  borrarFormula = ($event, index) => {
-    if ($event.key === "Backspace" && $event.srcElement.value == '') {
+  borrarFormula = ($event, index) => { 
       (<FormArray>this.formGroup.controls['formulas']).removeAt(index);
-    }
   }
-  borrarImagen = ($event, index) => {
-    if ($event.key === "Backspace" && $event.srcElement.value == '') {
-      (<FormArray>this.formGroup.controls['imagenes']).removeAt(index);
-    }
+  borrarImagen = ($event, index) => { 
+      (<FormArray>this.formGroup.controls['imagenes']).removeAt(index); 
   }
 
   ngOnInit() {
   }
 
-  guardar = (id: string) => {
+  guardar = (id: string) => { 
     if (this.formGroup.valid) {
 
       this.actualizarNombreElementoMostrado();
@@ -122,10 +118,10 @@ export class ElementAdminComponent implements OnInit {
         },
         formulas: this.formGroup.value.formulas,
       }
-
+      
       this.elementoId = this.dataService.saveElemento(elemento);
-
-      this.actualizarParametroEnRuta();
+ 
+      this.regresarAPrincipal();
 
       this.snotifyService.success('Información guardada correctamente', 'Información');
     } else {
@@ -137,13 +133,11 @@ export class ElementAdminComponent implements OnInit {
     this.elementoNombre = this.formGroup.value.nombre.toLowerCase();
   }
 
-  actualizarParametroEnRuta = () => {
-    this.router.navigate(['secure', 'element', this.elementoNombre, 'edit']);
+  regresarAPrincipal = () => {
+    this.router.navigate(['secure', 'principal']);
   }
 
-
-
-
+ 
   detectFiles(event: any) {
     this.selectedFiles = event.target.files;
   }

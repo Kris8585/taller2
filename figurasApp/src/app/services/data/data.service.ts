@@ -31,8 +31,7 @@ export class DataService {
   deleteElemento(elemento: Elemento) { 
     this.angularFirestore.collection<Elemento>('shapes').doc(elemento.id).delete();
   }
-
-
+ 
   saveElemento(elemento: Elemento):string {
     if (elemento.id && elemento.id != '') {
       this.angularFirestore.collection<Elemento>('shapes').doc(elemento.id).set(elemento);
@@ -41,7 +40,7 @@ export class DataService {
       elemento.id = this.angularFirestore.createId();
       this.angularFirestore.collection<Elemento>('shapes').add(elemento)
       
-    } 
+    }  
      return elemento.id;
   }
 
