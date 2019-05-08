@@ -33,15 +33,16 @@ export class DataService {
   }
 
 
-  saveElemento(elemento: Elemento) {
-    if (elemento.id) {
-      this.angularFirestore.collection<Elemento>('shapes').add(elemento)
-
+  saveElemento(elemento: Elemento):string {
+    if (elemento.id && elemento.id != '') {
+      this.angularFirestore.collection<Elemento>('shapes').doc(elemento.id).set(elemento);
+      
     } else {
       elemento.id = this.angularFirestore.createId();
+      this.angularFirestore.collection<Elemento>('shapes').add(elemento)
       
-      this.angularFirestore.collection<Elemento>('shapes').doc(elemento.id).set(elemento);
-    }  
+    } 
+     return elemento.id;
   }
 
 }
